@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 // Components
 import SliderItem from "./SliderItem";
-import arrow_left from "images/left_arrow.svg";
-import arrow_right from "images/right_arrow.svg";
 // Styles
 import {
   StyledSliderWrapper,
@@ -15,29 +13,41 @@ type SliderProps = {
   children?: any;
   zoomFactor: number;
   sliderWidth: number;
-  arrowType: string;
   slideMargin: number;
+  slidePadding: number;
   maxVisibleSlides: number;
   pageTransition: number;
   infinity: boolean;
+  leftArrowImg: string;
+  rightArrowImg: string;
+  slideBorderRadius: number;
+  slideBoxShadow: string;
+  sliderBackground: string;
 };
 
 const numberOfSlides = (maxVisibleSlides: number, windowWidth: number) => {
+  console.log(windowWidth)
   if (windowWidth > 1200) return maxVisibleSlides;
   if (windowWidth > 992) return 4;
   if (windowWidth > 768) return 3;
-  return 2;
+  if (windowWidth > 600) return 2;
+  return 1;
 };
 
 const Slider: React.FC<SliderProps> = ({
   children,
   zoomFactor,
   sliderWidth,
-  arrowType,
+  slidePadding,
   slideMargin,
   maxVisibleSlides,
   pageTransition,
   infinity,
+  leftArrowImg,
+  rightArrowImg,
+  slideBorderRadius,
+  slideBoxShadow,
+  sliderBackground
 }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [transformValue, setTransformValue] = useState(`-${zoomFactor / 2}%`);
@@ -131,9 +141,11 @@ const Slider: React.FC<SliderProps> = ({
 
   return (
     <SliderComponent>
-      <CenterWrapper>
+      <CenterWrapper sliderBackground={sliderBackground}>
         <StyledSliderWrapper
-          arrowType={arrowType}
+          slideBorderRadius={slideBorderRadius}
+          slideBoxShadow={slideBoxShadow}
+          slidePadding={slidePadding}
           zoomFactor={zoomFactor}
           visibleSlides={visibleSlides}
           width={sliderWidth}
@@ -168,7 +180,7 @@ const Slider: React.FC<SliderProps> = ({
                 className="button back"
                 onClick={() => handleToBack(infinity)}
               >
-                <img src={arrow_left} alt="back" />
+                <img src={leftArrowImg} alt="back" />
               </button>
             </div>
           }
@@ -179,7 +191,7 @@ const Slider: React.FC<SliderProps> = ({
                 className="button forward"
                 onClick={() => handleToForward(infinity)}
               >
-                <img src={arrow_right} alt="forward" />
+                <img src={rightArrowImg} alt="forward" />
               </button>
             </div>
           }

@@ -1,11 +1,13 @@
-import styled from 'styled-components';
-import { StyledSliderItem } from './SliderItemStyles';
+import styled from "styled-components";
+import { StyledSliderItem } from "./SliderItemStyles";
 
 type SliderWrapperProps = {
   zoomFactor: number;
   visibleSlides: number;
-  arrowType: string;
   width: number;
+  slidePadding: number;
+  slideBorderRadius: number;
+  slideBoxShadow: string;
 };
 
 type SliderProps = {
@@ -17,40 +19,43 @@ type SliderProps = {
   ref: any;
 };
 
-export const CenterWrapper = styled.div`
+type CenterWrapperProps = {
+  sliderBackground: string;
+};
+
+export const CenterWrapper = styled.div<CenterWrapperProps>`
   position: relative;
-  background-color: orange;
-  width: 90%;
+  background: ${(props) => props.sliderBackground};
+  border-radius: 20px;
+  width: ${(props) => (window.innerWidth < 800 ? 100 : 90)}%;
   display: flex;
   justify-content: center;
-`
+`;
 export const SliderComponent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 
 export const StyledSliderWrapper = styled.div<SliderWrapperProps>`
-  
   overflow: hidden;
-  //position: relative;
-  width: ${(props) => props.width}%;
-  background: white;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  border-radius: 10px;
-  padding: ${(props) => (props.zoomFactor / props.visibleSlides) * 0.7 + '%'} 0;
+  width: ${(props) => (window.innerWidth < 800 ? 65 : props.width)}%;
+  padding: ${(props) => (props.zoomFactor / props.visibleSlides) * 0.7 + "%"} 0;
   .slide {
-    background-color: rgba(0,0,0,0.1);
+    border-radius: ${(props) => props.slideBorderRadius}px;
+    box-shadow: ${(props) => props.slideBoxShadow};
+    padding: ${(props) => props.slidePadding}px;
+    background-color: white;
     display: flex;
     align-items: center;
     &__image {
       img {
         max-width: 200px;
-        min-width: 180px;
+        min-width: ${(props) => (window.innerWidth < 600 ? 100 : 180)}px;
       }
     }
     &__text {
-
+     font-size: ${(props) => (window.innerWidth < 500 ? 0.8 : 1)}rem;
     }
   }
   .button-wrapper {
@@ -61,10 +66,8 @@ export const StyledSliderWrapper = styled.div<SliderWrapperProps>`
     display: flex;
     justify-content: center;
     align-items: center
-    background-color: orange;
-    //padding: ${(props) => props.zoomFactor / 7 + '%'} 0;
+    //padding: ${(props) => props.zoomFactor / 7 + "%"} 0;
     box-sizing: border-box;
-    //${(props) => props.arrowType === 'inside green' && 'color: green;'}
   }
 
   .button {
@@ -77,19 +80,24 @@ export const StyledSliderWrapper = styled.div<SliderWrapperProps>`
     outline: none;
     transition: all 0.7s;
     user-select: none;
+    img {
+      
+      width: ${(props) => (window.innerWidth < 500 ? 75 : 100)}%;
+    }
   }
 
   .back {
-    left: ${(props) => props.arrowType === 'outside green' || 'outside gray' ? 0 : 10}px;
+    left: 5px;
   }
 
   .forward {
-    right: ${(props) => props.arrowType === 'outside green' || 'outside gray' ? 0 : 10}px;
+    right: 5px;
   }
 `;
 
 export const StyledSlider = styled.div<SliderProps>`
   display: flex;
+  align-items: center;
   transition: transform ${(props) => props.pageTransition}ms ease;
 
   :hover ${StyledSliderItem} {

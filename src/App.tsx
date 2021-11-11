@@ -2,27 +2,31 @@ import React from 'react';
 import Slider from './components/Slider';
 import './global.css';
 import slideImg from './images/slideImg.png'
+import arrow_left from "images/left_arrow.svg";
+import arrow_right from "images/right_arrow.svg";
+import left_arrow_gray from "images/left_arrow_gray.svg";
+import right_arrow_gray from "images/right_arrow_gray.svg";
+import huawei from "images/Huawei.jpg";
+import lenovo from "images/lenovo.png";
+import lg from "images/lg.png";
+import samsung from "images/samsung.png";
 
 const SliderProps = {
-  zoomFactor: 5, // How much the image should zoom on hover in percent
-  slideMargin: 15, // Margin on each side of slides
+  zoomFactor: 5,
+  slideMargin: 15,
   maxVisibleSlides: 3,
-  pageTransition: 500, // Transition when flipping pages
+  pageTransition: 500,
   sliderWidth: 80,
-  arrowType: 'inside green',
-  infinity: true
+  infinity: true,
+  leftArrowImg: left_arrow_gray,
+  rightArrowImg: right_arrow_gray,
+  slidePadding: 20,
+  slideBorderRadius: 10,
+  slideBoxShadow: "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;",
+  sliderBackground: "none"
 };
-/*
-  arrow types:
-1. inside green;
-2. outside green;
 
-3. inside gray;
-4. outside gray;
-
-5. none;
-*/
-const testData = [
+const testData1 = [
   {id: 1, name: "Iphone 8", price: "От 60 тыс. рублей", img: slideImg},
   {id: 2, name: "Iphone 9", price: "От 50 тыс. рублей", img: slideImg},
   {id: 3, name: "Iphone 4", price: "От 67 тыс. рублей", img: slideImg},
@@ -36,36 +40,33 @@ const testData = [
   {id: 11, name: "Iphone 10", price: "От 43 тыс. рублей", img: slideImg},
   {id: 12, name: "Iphone 7", price: "От 66 тыс. рублей", img: slideImg}
 ]
+const testData2 = [
+  {id: 1, img: huawei},
+  {id: 2, img: lenovo},
+  {id: 3, img: lg},
+  {id: 4, img: samsung},
+  {id: 5, img: huawei},
+  {id: 6, img: lenovo},
+  {id: 7, img: lg},
+  {id: 8, img: samsung},
+]
 
-
-
-// Types
-export type Character = {
-  abilities: string[];
-  alias: string[];
-  gender: string;
-  hair: string;
-  id: number;
-  img_url: string;
-  name: string;
-  origin: string;
-  species: string;
-  status: string;
-};
 
 const App: React.FC = () => {
 
   return (
       <Slider {...SliderProps}>
-        {testData.map(slide => (
+        {testData2.map(slide => (
           <div className="slide" key={slide.id}>
           <section className="slide__image">
             <img src={slide.img} alt='character' />
           </section>
+          {/*
           <section className="slide__text">
             <h2>{slide.name}</h2>
             <p>{slide.price}</p>
           </section>
+          */}
           </div>
         ))}
       </Slider>
